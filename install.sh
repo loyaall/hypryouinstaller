@@ -1,0 +1,87 @@
+#!/bin/sh
+
+path=$(pwd)
+urls=$(curl -sL https://api.github.com/repos/koeqaife/hyprland-material-you/releases/latest | jq -r '.assets[].browser_download_url')
+
+clear
+echo " _   _                __   __          "
+echo "| | | |_   _ _ __  _ _\ \ / /__  _   _ "
+echo "| |_| | | | | '_ \| '__\ V / _ \| | | |"
+echo "|  _  | |_| | |_) | |   | | (_) | |_| |"
+echo "|_| |_|__,  | .__/|_|   |_|\___/ \_,_/"
+echo "       |___/|_|                        " 
+echo ""
+echo " This is the installer of the HyprYou"
+echo "   Hyprland's Rice made by Koeqaife"
+echo ""
+echo "    To change page, press any key!"
+echo ""
+echo "                             page 1/4"
+read -n 1
+clear
+echo " _   _                __   __          "
+echo "| | | |_   _ _ __  _ _\ \ / /__  _   _ "
+echo "| |_| | | | | '_ \| '__\ V / _ \| | | |"
+echo "|  _  | |_| | |_) | |   | | (_) | |_| |"
+echo "|_| |_|__,  | .__/|_|   |_|\___/ \_,_/"
+echo "       |___/|_|                        " 
+echo ""
+echo "  When you use this rice, remember"
+echo "    to put HyprYou desktop entry."
+echo ""
+echo "                             page 2/4"
+read -n 1
+clear
+echo " _   _                __   __          "
+echo "| | | |_   _ _ __  _ _\ \ / /__  _   _ "
+echo "| |_| | | | | '_ \| '__\ V / _ \| | | |"
+echo "|  _  | |_| | |_) | |   | | (_) | |_| |"
+echo "|_| |_|__,  | .__/|_|   |_|\___/ \_,_/"
+echo "       |___/|_|                        " 
+echo ""
+echo "                             page 3/4"
+
+sudo pacman -S --noconfirm git base-devel wget jq alacritty nautilus
+mkdir -p ~/.cache/hypryou-installer
+cd ~/.cache/hypryou-installer
+
+filenames=""
+for url in $urls; do
+  filename=$(basename "$url")
+  wget -q --show-progress -O "$filename" "$url"
+  filenames="$filenames $filename"
+done
+
+git clone https://aur.archlinux.org/python-materialyoucolor-git.git
+cd python-matherialyoucolor-git && makepkg -si --noconfirm
+cd ~/.cache/hypryou-installer
+
+git clone https://aur.archlinux.org/libastal-bluetooth-git.git
+cd libastal-bluetooth-git && makepkg -si --noconfirm
+cd ~/.cache/hypryou-installer
+
+git clone https://aur.archlinux.org/material-symbols-git.git 
+cd material-symbols-git && makepkg -si --noconfirm
+cd ~/.cache/hypryou-installer
+
+git clone https://aur.archlinux.org/libastal-wireplumber-git
+cd libastal-wireplumber-git && makepkg -si --noconfirm
+
+cd ~/.cache/hypryou-installer
+
+sudo pacman -U --noconfirm $filenames
+
+sudo systemctl enable greetd.service
+
+rm -rf ~/.cache/hypryou-installer
+
+clear
+
+echo " _   _                __   __          "
+echo "| | | |_   _ _ __  _ _\ \ / /__  _   _ "
+echo "| |_| | | | | '_ \| '__\ V / _ \| | | |"
+echo "|  _  | |_| | |_) | |   | | (_) | |_| |"
+echo "|_| |_|__,  | .__/|_|   |_|\___/ \_,_/"
+echo "       |___/|_|                        " 
+echo ""
+echo " Installation finished. Please reboot"
