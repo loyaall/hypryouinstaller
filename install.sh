@@ -1,4 +1,5 @@
 #!/bin/sh
+# :3
 
 urls=$(curl -sL https://api.github.com/repos/koeqaife/hyprland-material-you/releases/latest | jq -r '.assets[].browser_download_url')
 filenames=$(curl -sL https://api.github.com/repos/koeqaife/hyprland-material-you/releases/latest | jq -r '.assets[].name')
