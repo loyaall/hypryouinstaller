@@ -1,7 +1,7 @@
 #!/bin/sh
 
-path=$(pwd)
 urls=$(curl -sL https://api.github.com/repos/koeqaife/hyprland-material-you/releases/latest | jq -r '.assets[].browser_download_url')
+filenames=$(curl -sL https://api.github.com/repos/koeqaife/hyprland-material-you/releases/latest | jq -r '.assets[].name')
 
 clear
 echo " _   _                __   __          "
@@ -45,31 +45,19 @@ sudo pacman -S --noconfirm git base-devel wget jq alacritty nautilus
 mkdir -p ~/.cache/hypryou-installer
 cd ~/.cache/hypryou-installer
 
-filenames=""
 for url in $urls; do
   filename=$(basename "$url")
   wget -q --show-progress -O "$filename" "$url"
-  filenames="$filenames $filename"
 done
 
-git clone https://aur.archlinux.org/python-materialyoucolor-git.git
-cd python-matherialyoucolor-git && makepkg -si --noconfirm
-cd ~/.cache/hypryou-installer
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin && makepkg -si --noconfirm
 
-git clone https://aur.archlinux.org/libastal-bluetooth-git.git
-cd libastal-bluetooth-git && makepkg -si --noconfirm
-cd ~/.cache/hypryou-installer
-
-git clone https://aur.archlinux.org/material-symbols-git.git 
-cd material-symbols-git && makepkg -si --noconfirm
-cd ~/.cache/hypryou-installer
-
-git clone https://aur.archlinux.org/libastal-wireplumber-git
-cd libastal-wireplumber-git && makepkg -si --noconfirm
+yay -S --noconfirm python-materialyoucolor-git libastal-bluetooth-git ttf-material-symbols-variable-git libastal-wireplumber-git
 
 cd ~/.cache/hypryou-installer
 
-sudo pacman -U --noconfirm $filenames
+sudo pacman -U --noconfirm hypryou*
 
 sudo systemctl enable greetd.service
 
