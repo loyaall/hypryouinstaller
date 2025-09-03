@@ -42,7 +42,7 @@ echo "       |___/|_|                        "
 echo ""
 echo "                             page 3/4"
 
-sudo pacman -S --noconfirm git base-devel wget jq alacritty nautilus
+sudo pacman -S --noconfirm git base-devel wget jq alacritty nautilus tela-circle-icon-theme-nord noto-fonts-emoji
 mkdir -p ~/.cache/hypryou-installer
 cd ~/.cache/hypryou-installer
 
@@ -54,7 +54,7 @@ done
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin && makepkg -si --noconfirm
 
-yay -S --noconfirm python-materialyoucolor-git libastal-bluetooth-git ttf-material-symbols-variable-git libastal-wireplumber-git
+yay -S --noconfirm python-materialyoucolor-git libastal-bluetooth-git ttf-material-symbols-variable-git libastal-wireplumber-git bibata-cursor-theme-bin
 
 cd ~/.cache/hypryou-installer
 
